@@ -1,0 +1,42 @@
+%%[
+/* Retrieve subscriber's attributes */
+SET @SubscriberKey = AttributeValue("ConstituentID")
+SET @JobID = AttributeValue("MailingID")
+SET @PrimarySchool = TRIM(AttributeValue("PrimarySchool"))
+SET @DynamicContentRule = "Default"
+
+/* Assign dynamic content rules based on PrimarySchool */
+IF NOT EMPTY(@PrimarySchool) THEN
+    IF @PrimarySchool == "Business" THEN
+        SET @DynamicContentRule = "TerryContent"
+    ELSEIF @PrimarySchool == "Journalism and Mass Communication" THEN
+        SET @DynamicContentRule = "GradyContent"
+    ELSEIF @PrimarySchool == "Public and International Affairs" THEN
+        SET @DynamicContentRule = "SPIAContent"
+    ELSE
+        SET @DynamicContentRule = "Default"
+    ENDIF
+ELSE
+    SET @DynamicContentRule = "Default"
+ENDIF
+
+/* Set the dynamic content values as subscriber attributes */
+SET @rulevalue = @DynamicContentRule
+SET @emailname = AttributeValue("MailingName")
+SET @timestamp = Now()
+
+/* Debugging Outputs for Testing */
+/* OutputLine(Concat("SubscriberKey: ", @SubscriberKey))
+OutputLine(Concat("DynamicContentRule: ", @DynamicContentRule))
+OutputLine(Concat("JobID: ", @JobID))
+OutputLine(Concat("rulevalue: ", @rulevalue))
+OutputLine(Concat("emailname: ", @emailname))
+OutputLine(Concat("timestamp: ", @timestamp)) */
+
+/* Log data to the Dynamic Content_DE_Non Sendable */
+IF NOT EMPTY(@SubscriberKey) AND NOT EMPTY(@JobID) THEN
+    InsertDE("Dynamic Content_DE_Non Sendable", "SubscriberKey", @SubscriberKey, "DynamicContentRule", @DynamicContentRule, "JobID", @JobID, "rulevalue", @rulevalue, "emailname", @emailname, "timestamp", @timestamp)
+ELSE
+    RaiseError("Missing required data for InsertDE function.", false)
+ENDIF
+]%%
