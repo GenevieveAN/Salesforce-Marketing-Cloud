@@ -23,9 +23,10 @@ ENDIF
 /* Set the dynamic content values as subscriber attributes */
 SET @rulevalue = @DynamicContentRule
 SET @emailname = AttributeValue("MailingName")
-SET @timestamp = Now()
+SET @timestamp = Format(DateAdd(Now(), 1, "H", "yyyy-MM-dd HH-mm-ss"
 
-/* Debugging Outputs for Testing */
+/* Debugging Outputs for Testing. Comment out of script when testing is complete */
+
 /* OutputLine(Concat("SubscriberKey: ", @SubscriberKey))
 OutputLine(Concat("DynamicContentRule: ", @DynamicContentRule))
 OutputLine(Concat("JobID: ", @JobID))
@@ -33,9 +34,9 @@ OutputLine(Concat("rulevalue: ", @rulevalue))
 OutputLine(Concat("emailname: ", @emailname))
 OutputLine(Concat("timestamp: ", @timestamp)) */
 
-/* Log data to the Dynamic Content_DE_Non Sendable */
+/* Log data to the Dynamic Content Data Extension */
 IF NOT EMPTY(@SubscriberKey) AND NOT EMPTY(@JobID) THEN
-    InsertDE("Dynamic Content_DE_Non Sendable", "SubscriberKey", @SubscriberKey, "DynamicContentRule", @DynamicContentRule, "JobID", @JobID, "rulevalue", @rulevalue, "emailname", @emailname, "timestamp", @timestamp)
+    InsertDE("Dynamic Content_Test", "SubscriberKey", @SubscriberKey, "DynamicContentRule", @DynamicContentRule, "JobID", @JobID, "rulevalue", @rulevalue, "emailname", @emailname, "timestamp", @timestamp)
 ELSE
     RaiseError("Missing required data for InsertDE function.", false)
 ENDIF
