@@ -5,7 +5,7 @@ SET @JobID = AttributeValue("MailingID")
 SET @PrimarySchool = TRIM(AttributeValue("PrimarySchool"))
 SET @DynamicContentRule = "Default"
 
-/* Assign dynamic content rules based on PrimarySchool */
+/* Assign dynamic content rules based on your previously specified designation */
 IF NOT EMPTY(@PrimarySchool) THEN
     IF @PrimarySchool == "Business" THEN
         SET @DynamicContentRule = "TerryContent"
