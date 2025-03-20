@@ -1,0 +1,72 @@
+%%[
+SET @JobID = AttributeValue("JobID")
+SET @MailingID = AttributeValue("MAILINGID")
+SET @SubscriberKey = AttributeValue("CONSTITUENTID")
+SET @MailingName = AttributeValue("MAILINGNAME")
+SET @SourceCode = AttributeValue("SOURCECODE")
+SET @FinderNumber = AttributeValue("FINDERNUMBER")
+SET @SegmentName = TRIM(AttributeValue("SEGMENTNAME"))
+SET @Timestamp = DateAdd(Now(), 2, "H")
+
+/* DynamicContentRule logic based on SegmentName */
+SET @DynamicContentRule = ">CDAG - FY25 - DDOG - SCUD Dynamic Content Template"
+IF NOT EMPTY (@SegmentName) THEN
+   IF @SegmentName == "A&S - All Living LDSOA Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - LDSA"
+ELSEIF @SegmentName == "A&S - Franklin College alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DOOG - Noon - Franklin"
+ELSEIF @SegmentName == "CAES - Alumni with Active Email" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - CAES"
+ELSEIF @SegmentName == "COE - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - MFECOE"
+ELSEIF @SegmentName == "A&S - All Redcoat Members for e-mail" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - Redcoat Band"
+ELSEIF @SegmentName == "ECOL - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - ECOL"
+ELSEIF @SegmentName == "SSW - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - SSW"
+ELSEIF @SegmentName == "CPH - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - CPH"
+ELSEIF @SegmentName == "OSA - Let All the Big Dawgs Eat Donors (Individuals Only)" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - OSA"
+ELSEIF @SegmentName == "WFNR - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - WFNR"
+ELSEIF @SegmentName == "PHAR - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - PHAR"
+ELSEIF @SegmentName == "FACS - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - FACS"
+ELSEIF @SegmentName == "CED - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - CED"
+ELSEIF @SegmentName == "HON - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - HON"
+ELSEIF @SegmentName == "JRNL - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - JRNL"
+ELSEIF @SegmentName == "CVM - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - CVM"
+ELSEIF @SegmentName == ">SPIA - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - SPIA"
+ELSEIF @SegmentName == "LAW - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - LAW"
+ELSEIF @SegmentName == "A&S - All Living HHSOM Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - HHSM"
+ELSEIF @SegmentName == "TCOB - All Living Alumni" THEN
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - Noon - TCOB"
+ELSE
+    SET @DynamicContentRule = "CDAG - FY25 - DDOG - SCUD Dynamic Content Template"
+ENDIF
+    ENDIF
+
+/* Debugging - Output retrieved values
+/* OutputLine(Concat("JobID: ", @JobID))
+OutputLine(Concat("MailingID: ", @MailingID))
+OutputLine(Concat("SubscriberKey: ", @SubscriberKey))
+OutputLine(Concat("MailingName: ", @MailingName))
+OutputLine(Concat("SourceCode: ", @SourceCode))
+OutputLine(Concat("SegmentName: ", @SegmentName))
+OutputLine(Concat("FinderNumber: ", @FinderNumber))
+OutputLine(Concat("Timestamp: ", @Timestamp))
+OutputLine(Concat("DynamicContentRule: ", @DynamicContentRule)) */
+
+Insert the log data into the tracking DE */
+InsertDE( "StagingSendLog","JobID", @JobID,"MailingID", @MailingID,"SubscriberKey", @SubscriberKey,"MailingName", @MailingName,"DynamicContentRule", @DynamicContentRule,"SourceCode", @SourceCode,"SegmentName", @SegmentName,"FinderNumber", @FinderNumber,"Timestamp", @Timestamp)
+]%%
