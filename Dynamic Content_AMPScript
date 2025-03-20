@@ -5,7 +5,8 @@ SET @JobID = AttributeValue("MailingID")
 SET @PrimarySchool = TRIM(AttributeValue("PrimarySchool"))
 SET @DynamicContentRule = "Default"
 
-/* Assign dynamic content rules based on your previously specified designation */
+/* Assign dynamic content rules based on your previously specified designation. In this case, we wanted to 
+send custom emails to recipients that had attended a specific school or college */
 IF NOT EMPTY(@PrimarySchool) THEN
     IF @PrimarySchool == "Business" THEN
         SET @DynamicContentRule = "TerryContent"
