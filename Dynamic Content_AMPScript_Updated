@@ -56,7 +56,7 @@ ELSE
 ENDIF
     ENDIF
 
-/* Debugging - Output retrieved values
+/* Debugging - Output retrieved values*/
 /* OutputLine(Concat("JobID: ", @JobID))
 OutputLine(Concat("MailingID: ", @MailingID))
 OutputLine(Concat("SubscriberKey: ", @SubscriberKey))
