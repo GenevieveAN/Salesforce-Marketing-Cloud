@@ -6,7 +6,7 @@ This AMPscript dynamically assigns targeted email content rules based on each su
 ---
 
 ## 🧩 The Problem It Solves
-Our alumni and donor marketing team manages 20+ unique audience segments, each requiring tailored content. Manually building separate emails or duplicating content blocks for each segment was inefficient and error-prone.
+Our alumni and donor marketing team was managing 20+ unique audience segments for a major fundraising campaign, each requiring tailored content. Manually building separate emails or duplicating content blocks for each segment was inefficient and error-prone.
 
 We needed a centralized, scalable solution to:
 - Dynamically assign content rules based on `SegmentName`
